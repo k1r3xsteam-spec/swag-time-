@@ -1,0 +1,17 @@
+name: swag_time
+description: Swag/Time — OSINT toolkit
+publish_to: none
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^1.2.0
+  image_picker: ^1.1.2
+  cupertino_icons: ^1.0.6
+
+flutter:
+  uses-material-design: true
