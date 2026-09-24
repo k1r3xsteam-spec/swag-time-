@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 
 class Api {
-  static const base = "http://10.0.2.2:8000";
+  static const base = "https://swag-time.onrender.com";
 
   static Future<Map<String, dynamic>> username(String name) => _get("/username/$name");
   static Future<Map<String, dynamic>> email(String addr) => _get("/email/$addr");
