@@ -3,11 +3,15 @@ name: Build APK
 on:
   push:
     branches: [ main ]
+    tags:
+      - 'v*'
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -29,11 +33,14 @@ jobs:
           flutter create . --platforms=android --project-name=swag_time --org=com.swagtime
           flutter pub get
 
-      - name: Add INTERNET permission
+      - name: Patch AndroidManifest
         working-directory: app
         run: |
           MANIFEST="android/app/src/main/AndroidManifest.xml"
+          # INTERNET permission
           sed -i 's|<application|<uses-permission android:name="android.permission.INTERNET"/>\n    <application|' $MANIFEST
+          # queries для Telegram
+          sed -i 's|</application>|    <queries>\n        <package android:name="org.telegram.messenger" />\n        <package android:name="org.telegram.messenger.web" />\n        <package android:name="org.telegram.plus" />\n        <package android:name="org.thunderdog.challegram" />\n        <intent>\n            <action android:name="android.intent.action.VIEW" />\n            <data android:scheme="tg" />\n        </intent>\n    </queries>\n</application>|' $MANIFEST
           cat $MANIFEST
 
       - name: Generate Launcher Icons
@@ -44,8 +51,17 @@ jobs:
         working-directory: app
         run: flutter build apk --release --split-per-abi
 
-      - name: Upload APK
+      - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: swag-time-apk
           path: app/build/app/outputs/flutter-apk/*.apk
+
+      - name: Create Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: app/build/app/outputs/flutter-apk/*.apk
+          generate_release_notes: true
+          draft: false
+          prerelease: false
