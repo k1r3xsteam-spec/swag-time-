@@ -1,6 +1,6 @@
 from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
-from modules import username, email, domain, url_reputation, phone, exif
+from modules import username, domain, url_reputation, phone, exif, ip
 
 app = FastAPI(title="Swag/Time API", version="1.0")
 
@@ -16,16 +16,12 @@ def root():
     return {
         "app": "Swag/Time",
         "version": "1.0",
-        "modules": ["username", "email", "domain", "url", "phone", "exif"],
+        "modules": ["username", "domain", "url", "phone", "ip", "exif"],
     }
 
 @app.get("/username/{name}")
 async def username_lookup(name: str):
     return await username.search(name)
-
-@app.get("/email/{addr}")
-async def email_lookup(addr: str):
-    return await email.check(addr)
 
 @app.get("/domain/{dom}")
 async def domain_lookup(dom: str):
@@ -38,6 +34,10 @@ async def url_lookup(url: str):
 @app.get("/phone/{number}")
 async def phone_lookup(number: str):
     return await phone.check(number)
+
+@app.get("/ip/{addr}")
+async def ip_lookup(addr: str):
+    return await ip.lookup(addr)
 
 @app.post("/exif")
 async def exif_lookup(file: UploadFile = File(...)):
