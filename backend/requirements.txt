@@ -5,3 +5,4 @@ python-dotenv==1.0.1
 python-whois==0.9.4
 dnspython==2.6.1
 python-multipart==0.0.9
+phonenumbers==8.13.43
