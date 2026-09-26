@@ -7,24 +7,17 @@ class ProxyScreen extends StatelessWidget {
   const ProxyScreen({super.key});
 
   Future<void> _connect(BuildContext ctx, ProxyItem p) async {
-    // Сначала пробуем tg://
-    final tgUri = Uri.parse(p.tgLink);
+    final uri = Uri.parse(p.webLink);
     try {
-      if (await canLaunchUrl(tgUri)) {
-        await launchUrl(tgUri, mode: LaunchMode.externalApplication);
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
         return;
       }
     } catch (_) {}
-
-    // Fallback на https://t.me/proxy
-    final webUri = Uri.parse(p.webLink);
     try {
-      if (await canLaunchUrl(webUri)) {
-        await launchUrl(webUri, mode: LaunchMode.externalApplication);
-        return;
-      }
+      await launchUrl(uri, mode: LaunchMode.platformDefault);
+      return;
     } catch (_) {}
-
     if (ctx.mounted) {
       ScaffoldMessenger.of(ctx).showSnackBar(
         const SnackBar(content: Text("Не удалось открыть Telegram")),
