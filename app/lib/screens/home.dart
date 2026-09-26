@@ -13,10 +13,10 @@ import 'proxy.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  static const tgPersonal = "tg://resolve?domain=Miroswatow";
-  static const tgChannel = "tg://resolve?domain=swag_t1me";
+  static const tgPersonal = "https://t.me/Miroswatow";
+  static const tgChannel = "https://t.me/swag_t1me";
 
-  Future<void> _openTg(BuildContext ctx, String url) async {
+  Future<void> _openUrl(BuildContext ctx, String url) async {
     final uri = Uri.parse(url);
     try {
       if (await canLaunchUrl(uri)) {
@@ -24,12 +24,9 @@ class HomeScreen extends StatelessWidget {
         return;
       }
     } catch (_) {}
-
-    final fallback = Uri.parse(
-        url.replaceFirst("tg://resolve?domain=", "https://t.me/"));
-    if (await canLaunchUrl(fallback)) {
-      await launchUrl(fallback, mode: LaunchMode.externalApplication);
-    }
+    try {
+      await launchUrl(uri, mode: LaunchMode.platformDefault);
+    } catch (_) {}
   }
 
   @override
@@ -109,7 +106,7 @@ class HomeScreen extends StatelessWidget {
             children: [
               Expanded(
                 child: ElevatedButton.icon(
-                  onPressed: () => _openTg(context, tgPersonal),
+                  onPressed: () => _openUrl(context, tgPersonal),
                   icon: const Icon(Icons.person, size: 18),
                   label: const Text("НАПИСАТЬ"),
                 ),
@@ -117,7 +114,7 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(width: 8),
               Expanded(
                 child: ElevatedButton.icon(
-                  onPressed: () => _openTg(context, tgChannel),
+                  onPressed: () => _openUrl(context, tgChannel),
                   icon: const Icon(Icons.campaign, size: 18),
                   label: const Text("КАНАЛ"),
                 ),
