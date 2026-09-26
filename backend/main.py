@@ -2,7 +2,7 @@ from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from modules import username, domain, url_reputation, phone, exif, ip
 
-app = FastAPI(title="Swag/Time API", version="1.0")
+app = FastAPI(title="Swag/Time API", version="1.1")
 
 app.add_middleware(
     CORSMiddleware,
@@ -15,7 +15,7 @@ app.add_middleware(
 def root():
     return {
         "app": "Swag/Time",
-        "version": "1.0",
+        "version": "1.1",
         "modules": ["username", "domain", "url", "phone", "ip", "exif"],
     }
 
@@ -33,7 +33,7 @@ async def url_lookup(url: str):
 
 @app.get("/phone/{number}")
 async def phone_lookup(number: str):
-    return await phone.check(number)
+    return phone.check(number)
 
 @app.get("/ip/{addr}")
 async def ip_lookup(addr: str):
