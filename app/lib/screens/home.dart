@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../theme.dart';
 import 'username.dart';
-import 'email.dart';
 import 'domain.dart';
 import 'url.dart';
 import 'phone.dart';
@@ -28,7 +27,6 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final modules = [
       ("USERNAME", Icons.person_search, const UsernameScreen()),
-      ("EMAIL", Icons.alternate_email, const EmailScreen()),
       ("DOMAIN", Icons.language, const DomainScreen()),
       ("URL", Icons.link, const UrlScreen()),
       ("PHONE", Icons.phone_android, const PhoneScreen()),
@@ -118,7 +116,7 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 20),
-          Center(
+          const Center(
             child: Text("[ swag_time ] — 5/9",
                 style: TextStyle(
                   fontFamily: 'monospace',
