@@ -7,15 +7,28 @@ class ProxyScreen extends StatelessWidget {
   const ProxyScreen({super.key});
 
   Future<void> _connect(BuildContext ctx, ProxyItem p) async {
-    final uri = Uri.parse(p.tgLink);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    } else {
-      if (ctx.mounted) {
-        ScaffoldMessenger.of(ctx).showSnackBar(
-          const SnackBar(content: Text("Telegram не установлен")),
-        );
+    // Сначала пробуем tg://
+    final tgUri = Uri.parse(p.tgLink);
+    try {
+      if (await canLaunchUrl(tgUri)) {
+        await launchUrl(tgUri, mode: LaunchMode.externalApplication);
+        return;
       }
+    } catch (_) {}
+
+    // Fallback на https://t.me/proxy
+    final webUri = Uri.parse(p.webLink);
+    try {
+      if (await canLaunchUrl(webUri)) {
+        await launchUrl(webUri, mode: LaunchMode.externalApplication);
+        return;
+      }
+    } catch (_) {}
+
+    if (ctx.mounted) {
+      ScaffoldMessenger.of(ctx).showSnackBar(
+        const SnackBar(content: Text("Не удалось открыть Telegram")),
+      );
     }
   }
 
@@ -35,7 +48,7 @@ class ProxyScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(4),
             ),
             child: const Text(
-              "[!] Публичные прокси. Владелец видит IP и может логировать метаданные. Используйте на свой риск. Для параноиков — свой VPS.",
+              "[!] Публичные прокси. Владелец видит IP и может логировать метаданные. Для параноиков — свой VPS.",
               style: TextStyle(
                 fontFamily: 'monospace',
                 color: SwagColors.red,
