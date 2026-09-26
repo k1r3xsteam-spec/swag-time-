@@ -13,13 +13,22 @@ import 'proxy.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  static const tgPersonal = "https://t.me/Miroswatow";
-  static const tgChannel = "https://t.me/swag_t1me";
+  static const tgPersonal = "tg://resolve?domain=Miroswatow";
+  static const tgChannel = "tg://resolve?domain=swag_t1me";
 
   Future<void> _openTg(BuildContext ctx, String url) async {
     final uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    try {
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+        return;
+      }
+    } catch (_) {}
+
+    final fallback = Uri.parse(
+        url.replaceFirst("tg://resolve?domain=", "https://t.me/"));
+    if (await canLaunchUrl(fallback)) {
+      await launchUrl(fallback, mode: LaunchMode.externalApplication);
     }
   }
 
