@@ -37,11 +37,43 @@ jobs:
         working-directory: app
         run: |
           MANIFEST="android/app/src/main/AndroidManifest.xml"
-          # INTERNET permission
-          sed -i 's|<application|<uses-permission android:name="android.permission.INTERNET"/>\n    <application|' $MANIFEST
-          # queries для Telegram
-          sed -i 's|</application>|    <queries>\n        <package android:name="org.telegram.messenger" />\n        <package android:name="org.telegram.messenger.web" />\n        <package android:name="org.telegram.plus" />\n        <package android:name="org.thunderdog.challegram" />\n        <intent>\n            <action android:name="android.intent.action.VIEW" />\n            <data android:scheme="tg" />\n        </intent>\n    </queries>\n</application>|' $MANIFEST
-          cat $MANIFEST
+          python3 - <<'PYEOF'
+import re
+path = "android/app/src/main/AndroidManifest.xml"
+with open(path, "r", encoding="utf-8") as f:
+    xml = f.read()
+
+# INTERNET permission перед <application>
+if 'android.permission.INTERNET' not in xml:
+    xml = re.sub(
+        r'<application',
+        '<uses-permission android:name="android.permission.INTERNET"/>\n    <application',
+        xml, count=1)
+
+# <queries> перед </manifest>
+if '<queries>' not in xml:
+    queries = '''    <queries>
+        <package android:name="org.telegram.messenger" />
+        <package android:name="org.telegram.messenger.web" />
+        <package android:name="org.telegram.plus" />
+        <package android:name="org.thunderdog.challegram" />
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="tg" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
+        </intent>
+    </queries>
+</manifest>'''
+    xml = xml.replace('</manifest>', queries, 1)
+
+with open(path, "w", encoding="utf-8") as f:
+    f.write(xml)
+
+print(xml)
+PYEOF
 
       - name: Generate Launcher Icons
         working-directory: app
