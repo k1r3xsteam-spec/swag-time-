@@ -1,0 +1,56 @@
+import 'guides_osint.dart';
+
+const anonGuides = <GuideCategory>[
+  GuideCategory("VPN и Tor", [
+    GuideItem("ProtonVPN", "https://protonvpn.com", "Бесплатный VPN от Proton"),
+    GuideItem("Mullvad", "https://mullvad.net", "Анонимный VPN, без логов"),
+    GuideItem("IVPN", "https://www.ivpn.net", "Приватный VPN"),
+    GuideItem("WireGuard", "https://www.wireguard.com", "Быстрый протокол VPN"),
+    GuideItem("Amnezia VPN", "https://amnezia.org", "Обход блокировок, свой сервер"),
+    GuideItem("Outline", "https://getoutline.org", "VPN от Google Jigsaw"),
+    GuideItem("Tor Browser", "https://www.torproject.org", "Анонимный браузер"),
+    GuideItem("Tails", "https://tails.net", "Анонимная ОС с флешки"),
+    GuideItem("Whonix", "https://www.whonix.org", "Анонимная ОС через Tor"),
+  ]),
+  GuideCategory("Анонимная почта", [
+    GuideItem("ProtonMail", "https://proton.me/mail", "Шифрованная почта"),
+    GuideItem("Tutanota", "https://tuta.com", "Шифрованная почта"),
+    GuideItem("StartMail", "https://www.startmail.com", "Приватная почта"),
+    GuideItem("Mailfence", "https://mailfence.com", "Бельгийская почта"),
+    GuideItem("SimpleLogin", "https://simplelogin.io", "Email-алиасы"),
+    GuideItem("AnonAddy", "https://anonaddy.com", "Email-алиасы"),
+    GuideItem("Firefox Relay", "https://relay.firefox.com", "Алиасы от Mozilla"),
+    GuideItem("Mail.tm", "https://mail.tm", "Одноразовая почта, API"),
+    GuideItem("Temp-Mail", "https://temp-mail.org", "Одноразовая почта"),
+    GuideItem("Guerrilla Mail", "https://www.guerrillamail.com", "Одноразовая почта"),
+  ]),
+  GuideCategory("Мессенджеры", [
+    GuideItem("Signal", "https://signal.org", "Шифрованный мессенджер"),
+    GuideItem("Session", "https://getsession.org", "Без номера телефона"),
+    GuideItem("Matrix", "https://matrix.org", "Децентрализованный протокол"),
+    GuideItem("Element", "https://element.io", "Клиент Matrix"),
+    GuideItem("Briar", "https://briarproject.org", "P2P мессенджер"),
+    GuideItem("SimpleX", "https://simplex.chat", "Без ID пользователя"),
+    GuideItem("Threema", "https://threema.ch", "Швейцарский мессенджер"),
+  ]),
+  GuideCategory("Шифрование", [
+    GuideItem("GnuPG", "https://gnupg.org", "PGP-шифрование"),
+    GuideItem("Kleopatra", "https://www.openpgp.org/software/kleopatra/", "GUI для PGP"),
+    GuideItem("VeraCrypt", "https://veracrypt.fr", "Шифрование дисков"),
+    GuideItem("Cryptomator", "https://cryptomator.org", "Шифрование облака"),
+    GuideItem("7-Zip", "https://www.7-zip.org", "Архивы с шифрованием"),
+    GuideItem("OnionShare", "https://onionshare.org", "Передача файлов через Tor"),
+  ]),
+  GuideCategory("Анонимные ОС", [
+    GuideItem("Tails", "https://tails.net", "Анонимная ОС с флешки"),
+    GuideItem("Whonix", "https://www.whonix.org", "Анонимная ОС через Tor"),
+    GuideItem("Qubes OS", "https://www.qubes-os.org", "Безопасная ОС"),
+    GuideItem("Kodachi", "https://www.digi77.com/linux-kodachi/", "Анонимная ОС"),
+  ]),
+  GuideCategory("Крипта приватность", [
+    GuideItem("Monero", "https://www.getmonero.org", "Анонимная крипта"),
+    GuideItem("Zcash", "https://z.cash", "Приватные транзакции"),
+    GuideItem("Wasabi Wallet", "https://wasabiwallet.io", "Bitcoin с CoinJoin"),
+    GuideItem("Samourai Wallet", "https://samouraiwallet.com", "Приватный Bitcoin"),
+  ]),
+];
