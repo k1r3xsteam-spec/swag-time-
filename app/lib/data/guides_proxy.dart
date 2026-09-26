@@ -5,6 +5,9 @@ class ProxyItem {
   const ProxyItem(this.server, this.port, this.secret);
 
   String get tgLink =>
+      "tg://proxy?server=$server&port=$port&secret=$secret";
+
+  String get webLink =>
       "https://t.me/proxy?server=$server&port=$port&secret=$secret";
 }
 
