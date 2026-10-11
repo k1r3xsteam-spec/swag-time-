@@ -6,7 +6,6 @@ OSINT-инструмент для Android. Работает **только с о
 | Модуль | Источник | Что даёт |
 |---|---|---|
 | Username | Sherlock (self-hosted) | Где занят ник |
-| Email | HaveIBeenPwned | Утечки |
 | Domain | WHOIS + DNS | Владелец, NS, MX, TXT |
 | URL | URLScan + Shodan | Репутация ссылок |
 | Phone | Numverify | Инфо о номере |
